@@ -1,0 +1,25 @@
+site_name: YOLOv5 Documentation
+nav:
+  - Introduction: index.md
+  - Quick Start: quick-start.md
+  - Tutorials:
+      Recommended: tutorials/recommended.md
+      Latest: tutorials/latest.md
+      Categories: tutorials/tutorials.md
+  - Archives:
+      GitHub: tutorials/articles/github.md
+      Train Custom Models: tutorials/articles/train-custom-models.md
+
+theme:
+  name: material
+  custom_dir: theme-overrides
+  favicon: img/favicon.ico
+  logo: img/logo-blue.png
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.top
+    - navigation.sections
+    - toc.integrate
+
