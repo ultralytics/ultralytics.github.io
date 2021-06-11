@@ -1,0 +1,927 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+    
+    
+      
+        <title>Multi-GPU Training - YOLOv5 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.33e2939f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#before-you-start" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="YOLOv5 Documentation" class="md-header__button md-logo" aria-label="YOLOv5 Documentation" data-md-component="logo">
+      
+  <img src="../../img/logo-blue.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            YOLOv5 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multi-GPU Training
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/ultralytics/yolov5/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ultralytics/yolov5
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="YOLOv5 Documentation" class="md-nav__button md-logo" aria-label="YOLOv5 Documentation" data-md-component="logo">
+      
+  <img src="../../img/logo-blue.png" alt="logo">
+
+    </a>
+    YOLOv5 Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ultralytics/yolov5/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ultralytics/yolov5
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Environments
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Environments" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Environments
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environments/AWS-Quickstart/" class="md-nav__link">
+        Amazon Web Services
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environments/Docker-Quickstart/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environments/GCP-Quickstart/" class="md-nav__link">
+        Google Cloud Platform
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Tutorials
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../train-custom-datasets/" class="md-nav__link">
+        Train Custom Data 📌
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../training-tips-best-results/" class="md-nav__link">
+        Tips for Best Training Results 📌
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weights-and-biasis-logging/" class="md-nav__link">
+        Weights & Biases Logging 🆕
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supervisely-ecosystem/" class="md-nav__link">
+        Supervisely Ecosystem 🆕
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Multi-GPU Training
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Multi-GPU Training
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    Before You Start
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    Training
+  </a>
+  
+    <nav class="md-nav" aria-label="Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-gpu" class="md-nav__link">
+    Single GPU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-gpu-dataparallel-mode-not-recommended" class="md-nav__link">
+    Multi-GPU DataParallel Mode (⚠️ not recommended)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-gpu-distributeddataparallel-mode-recommended" class="md-nav__link">
+    Multi-GPU DistributedDataParallel Mode (✅ recommended)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    Results
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    FAQ
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    Environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    Status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch-hub/" class="md-nav__link">
+        PyTorch Hub
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../torchscript-onnx-coreml-export/" class="md-nav__link">
+        TorchScript, ONNX, CoreML Export
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-time-augmentation/" class="md-nav__link">
+        Test-Time Augmentation (TTA)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-ensembling/" class="md-nav__link">
+        Model Ensembling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pruning-sparsity/" class="md-nav__link">
+        Model Pruning/Sparsity
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hyperparameter-evolution/" class="md-nav__link">
+        Hyperparameter Evolution
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transfer-learning-froze-layers/" class="md-nav__link">
+        Transfer Learning with Frozen Layers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/wang-xinyu/tensorrtx/tree/master/yolov5" class="md-nav__link">
+        TensorRT Deployment
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    Before You Start
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    Training
+  </a>
+  
+    <nav class="md-nav" aria-label="Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-gpu" class="md-nav__link">
+    Single GPU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-gpu-dataparallel-mode-not-recommended" class="md-nav__link">
+    Multi-GPU DataParallel Mode (⚠️ not recommended)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-gpu-distributeddataparallel-mode-recommended" class="md-nav__link">
+    Multi-GPU DistributedDataParallel Mode (✅ recommended)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    Results
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    FAQ
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    Environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    Status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ultralytics/yolov5/edit/master/docs/tutorials/multi-gpu-training.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Multi-GPU Training</h1>
+                
+                <p>📚 This guide explains how to properly use <strong>multiple</strong> GPUs to train a dataset with YOLOv5 🚀 on single or multiple machine(s).</p>
+<h2 id="before-you-start">Before You Start</h2>
+<p>Clone this repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch&gt;=1.7</strong>.</p>
+<pre><code class="language-bash">git clone https://github.com/ultralytics/yolov5 # clone repo
+cd yolov5
+pip install -r requirements.txt
+</code></pre>
+<h2 id="training">Training</h2>
+<p>Select a pretrained model to start training from. Here we select <a href="https://github.com/ultralytics/yolov5/blob/master/models/yolov5s.yaml">YOLOv5l</a>, the smallest model available. See our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a> for a full comparison of all models. We will train this model with Multi-GPU on the <a href="https://github.com/ultralytics/yolov5/blob/master/data/get_coco2017.sh">COCO</a> dataset.</p>
+<p align="center"><img width="700" alt="YOLOv5 Models" src="https://user-images.githubusercontent.com/26833433/103595982-ab986000-4eb1-11eb-8c57-4726261b0a88.png"></p>
+
+<h3 id="single-gpu">Single GPU</h3>
+<pre><code class="language-bash">$ python train.py  --batch-size 64 --data coco.yaml --weights yolov5s.pt --device 0
+</code></pre>
+<h3 id="multi-gpu-dataparallel-mode-not-recommended">Multi-GPU <a href="https://pytorch.org/docs/stable/nn.html#torch.nn.DataParallel">DataParallel</a> Mode (⚠️ not recommended)</h3>
+<p>You can increase the <code>device</code> to use Multiple GPUs in DataParallel mode.</p>
+<pre><code class="language-bash">$ python train.py  --batch-size 64 --data coco.yaml --weights yolov5s.pt --device 0,1
+</code></pre>
+<p>This method is slow and barely speeds up training compared to using just 1 GPU.</p>
+<h3 id="multi-gpu-distributeddataparallel-mode-recommended">Multi-GPU <a href="https://pytorch.org/docs/stable/nn.html#torch.nn.parallel.DistributedDataParallel">DistributedDataParallel</a> Mode (✅ recommended)</h3>
+<p>You will have to pass <code>python -m torch.distributed.launch --nproc_per_node</code>, followed by the usual arguments.</p>
+<pre><code class="language-bash">$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
+</code></pre>
+<p><code>--nproc_per_node</code> specifies how many GPUs you would like to use. In the example above, it is 2.
+<code>--batch-size</code> is now the Total batch-size. It will be divided evenly to each GPU. In the example above, it is 64/2=32 per GPU.</p>
+<p>The code above will use GPUs <code>0... (N-1)</code>.</p>
+<details>
+    <summary>Use specific GPUs (click to expand)</summary><br>
+
+You can do so by simply passing `--device` followed by your specific GPUs. For example, in the code below, we will use GPUs `2,3`.
+
+
+<pre><code class="language-bash">$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights '' --device 2,3
+</code></pre>
+
+
+</details>
+
+<details>
+    <summary>Use SyncBatchNorm (click to expand)</summary><br>
+
+
+[SyncBatchNorm](https://pytorch.org/docs/master/generated/torch.nn.SyncBatchNorm.html) could increase accuracy for multiple gpu training, however, it will slow down training by a significant factor. It is **only** available for Multiple GPU DistributedDataParallel training. 
+
+It is best used when the batch-size on **each** GPU is small (<= 8).
+
+To use SyncBatchNorm, simple pass `--sync-bn` to the command like below, 
+
+
+<pre><code class="language-bash">$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights '' --sync-bn
+</code></pre>
+
+</details>
+
+<details>
+    <summary>Use Multiple machines (click to expand)</summary><br>
+
+This is **only** available for Multiple GPU DistributedDataParallel training. 
+
+Before we continue, make sure the files on all machines are the same, dataset, codebase, etc. Afterwards, make sure the machines can communicate to each other.
+
+You will have to choose a master machine(the machine that the others will talk to). Note down its address(`master_addr`) and choose a port(`master_port`). I will use `master_addr = 192.168.1.1` and `master_port = 1234` for the example below.
+
+To use it, you can do as the following,
+
+
+<pre><code class="language-bash"># On master machine 0
+$ python -m torch.distributed.launch --nproc_per_node G --nnodes N --node_rank 0 --master_addr &quot;192.168.1.1&quot; --master_port 1234 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights ''
+</code></pre>
+
+
+<pre><code class="language-bash"># On machine R
+$ python -m torch.distributed.launch --nproc_per_node G --nnodes N --node_rank R --master_addr &quot;192.168.1.1&quot; --master_port 1234 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights ''
+</code></pre>
+
+where `G` is number of GPU per machine, `N` is the number of machines, and `R` is the machine number from `0...(N-1)`. 
+Let's say I have two machines with two GPUs each, it would be `G = 2` , `N = 2`, and `R = 1` for the above.
+
+Training will not start until <b>all </b> `N` machines are connected. Output will only be shown on master machine!
+
+</details>
+
+<h3 id="notes">Notes</h3>
+<ul>
+<li>This does not work on Windows!</li>
+<li><code>batch-size</code> must be a multiple of the number of GPUs!</li>
+<li>GPU 0 will take more memory than the other GPUs. (Edit: After 1.6 pytorch update, it may take even more memory.)</li>
+<li>If you get <code>RuntimeError: Address already in use</code>, it could be because you are running multiple trainings at a time. To fix this, simply use a different port number by adding <code>--master_port</code> like below,</li>
+</ul>
+<pre><code class="language-bash">$ python -m torch.distributed.launch --master_port 1234 --nproc_per_node 2 ...
+</code></pre>
+<h2 id="results">Results</h2>
+<p>Tested on COCO2017 dataset using V100s for 3 epochs with <code>yolov5l</code> and averaged.
+DistributedDataParallel mode.</p>
+<details>
+    <summary>Command</summary>
+
+
+<pre><code class="language-bash">$ python train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights '' --device 0
+$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
+$ python -m torch.distributed.launch --nproc_per_node 4 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
+$ python -m torch.distributed.launch --nproc_per_node 8 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
+</code></pre>
+
+</details>
+
+<p><img alt="image" src="https://user-images.githubusercontent.com/9899957/88168921-57702b00-cc45-11ea-8aab-2d020e1e45b9.png" />
+<img alt="image" src="https://user-images.githubusercontent.com/9899957/88168932-5b9c4880-cc45-11ea-87cb-1d4b98da61bc.png" /></p>
+<h2 id="faq">FAQ</h2>
+<p>If an error occurs, please read the checklist below first! (It could save your time)</p>
+<details>
+    <summary>Checklist (click to expand) </summary><br>
+
+<ul>
+    <li>Have you properly read this post?  </li>
+    <li>Have you tried to reclone the codebase? The code changes <b>daily</b>.</li>
+    <li>Have you tried to search for your error? Someone may have already encountered it in this repo or in another and have the solution. </li>
+    <li>Have you installed all the requirements listed on top (including the correct Python and Pytorch versions)? </li>
+    <li>Have you tried in other environments listed in the "Environments" section below? </li>
+    <li>Have you tried with another dataset like coco128 or coco2017? It will make it easier to find the root cause. </li>
+</ul>
+
+If you went through all the above, feel free to raise an Issue by giving as much detail as possible following the template. <br>
+
+</details>
+
+<h2 id="environments">Environments</h2>
+<p>YOLOv5 may be run in any of the following up-to-date verified environments (with all dependencies including <a href="https://developer.nvidia.com/cuda">CUDA</a>/<a href="https://developer.nvidia.com/cudnn">CUDNN</a>, <a href="https://www.python.org/">Python</a> and <a href="https://pytorch.org/">PyTorch</a> preinstalled):</p>
+<ul>
+<li><strong>Google Colab and Kaggle</strong> notebooks with free GPU: <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> <a href="https://www.kaggle.com/ultralytics/yolov5"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a></li>
+<li><strong>Google Cloud</strong> Deep Learning VM. See <a href="https://github.com/ultralytics/yolov5/wiki/GCP-Quickstart">GCP Quickstart Guide</a></li>
+<li><strong>Amazon</strong> Deep Learning AMI. See <a href="https://github.com/ultralytics/yolov5/wiki/AWS-Quickstart">AWS Quickstart Guide</a></li>
+<li><strong>Docker Image</strong>. See <a href="https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart">Docker Quickstart Guide</a> <a href="https://hub.docker.com/r/ultralytics/yolov5"><img src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" alt="Docker Pulls"></a></li>
+</ul>
+<h2 id="status">Status</h2>
+<p><img alt="CI CPU testing" src="https://github.com/ultralytics/yolov5/workflows/CI%20CPU%20testing/badge.svg" /></p>
+<p>If this badge is green, all <a href="https://github.com/ultralytics/yolov5/actions">YOLOv5 GitHub Actions</a> Continuous Integration (CI) tests are currently passing. CI tests verify correct operation of YOLOv5 training (<a href="https://github.com/ultralytics/yolov5/blob/master/train.py">train.py</a>), testing (<a href="https://github.com/ultralytics/yolov5/blob/master/test.py">test.py</a>), inference (<a href="https://github.com/ultralytics/yolov5/blob/master/detect.py">detect.py</a>) and export (<a href="https://github.com/ultralytics/yolov5/blob/master/models/export.py">export.py</a>) on MacOS, Windows, and Ubuntu every 24 hours and on every commit.</p>
+<h2 id="credits">Credits</h2>
+<p>I would like to thank @MagicFrogSJTU, who did all the heavy lifting, and @glenn-jocher for guiding us along the way.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+  <footer class="md-footer">
+    
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          <a href="../supervisely-ecosystem/" class="md-footer__link md-footer__link--prev" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                Supervisely Ecosystem 🆕
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../pytorch-hub/" class="md-footer__link md-footer__link--next" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                PyTorch Hub
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </footer>
+  
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top", "navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d892486b.min.js"></script>
+      
+    
+  </body>
+</html>

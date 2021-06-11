@@ -21,6 +21,9 @@ nav:
       Transfer Learning with Frozen Layers: tutorials/transfer-learning-froze-layers.md
       TensorRT Deployment: https://github.com/wang-xinyu/tensorrtx/tree/master/yolov5
 
+docs_dir: src
+site_dir: docs
+
 repo_url: https://github.com/ultralytics/yolov5
 repo_name: ultralytics/yolov5
 

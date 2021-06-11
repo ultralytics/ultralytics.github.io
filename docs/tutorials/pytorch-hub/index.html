@@ -1,0 +1,958 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+    
+    
+      
+        <title>PyTorch Hub - YOLOv5 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.33e2939f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#before-you-start" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="YOLOv5 Documentation" class="md-header__button md-logo" aria-label="YOLOv5 Documentation" data-md-component="logo">
+      
+  <img src="../../img/logo-blue.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            YOLOv5 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PyTorch Hub
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/ultralytics/yolov5/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ultralytics/yolov5
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="YOLOv5 Documentation" class="md-nav__button md-logo" aria-label="YOLOv5 Documentation" data-md-component="logo">
+      
+  <img src="../../img/logo-blue.png" alt="logo">
+
+    </a>
+    YOLOv5 Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ultralytics/yolov5/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ultralytics/yolov5
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Environments
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Environments" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Environments
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environments/AWS-Quickstart/" class="md-nav__link">
+        Amazon Web Services
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environments/Docker-Quickstart/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environments/GCP-Quickstart/" class="md-nav__link">
+        Google Cloud Platform
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Tutorials
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../train-custom-datasets/" class="md-nav__link">
+        Train Custom Data 📌
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../training-tips-best-results/" class="md-nav__link">
+        Tips for Best Training Results 📌
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weights-and-biasis-logging/" class="md-nav__link">
+        Weights & Biases Logging 🆕
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supervisely-ecosystem/" class="md-nav__link">
+        Supervisely Ecosystem 🆕
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-gpu-training/" class="md-nav__link">
+        Multi-GPU Training
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          PyTorch Hub
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        PyTorch Hub
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    Before You Start
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-yolov5-with-pytorch-hub" class="md-nav__link">
+    Load YOLOv5 with PyTorch Hub
+  </a>
+  
+    <nav class="md-nav" aria-label="Load YOLOv5 with PyTorch Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    Simple Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-example" class="md-nav__link">
+    Detailed Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-settings" class="md-nav__link">
+    Inference Settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-channels" class="md-nav__link">
+    Input Channels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#number-of-classes" class="md-nav__link">
+    Number of Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#force-reload" class="md-nav__link">
+    Force Reload
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    Training
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-results" class="md-nav__link">
+    Base64 Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-results" class="md-nav__link">
+    JSON Results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-models" class="md-nav__link">
+    Custom Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    Environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    Status
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../torchscript-onnx-coreml-export/" class="md-nav__link">
+        TorchScript, ONNX, CoreML Export
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-time-augmentation/" class="md-nav__link">
+        Test-Time Augmentation (TTA)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-ensembling/" class="md-nav__link">
+        Model Ensembling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pruning-sparsity/" class="md-nav__link">
+        Model Pruning/Sparsity
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hyperparameter-evolution/" class="md-nav__link">
+        Hyperparameter Evolution
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transfer-learning-froze-layers/" class="md-nav__link">
+        Transfer Learning with Frozen Layers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/wang-xinyu/tensorrtx/tree/master/yolov5" class="md-nav__link">
+        TensorRT Deployment
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    Before You Start
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-yolov5-with-pytorch-hub" class="md-nav__link">
+    Load YOLOv5 with PyTorch Hub
+  </a>
+  
+    <nav class="md-nav" aria-label="Load YOLOv5 with PyTorch Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    Simple Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-example" class="md-nav__link">
+    Detailed Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-settings" class="md-nav__link">
+    Inference Settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-channels" class="md-nav__link">
+    Input Channels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#number-of-classes" class="md-nav__link">
+    Number of Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#force-reload" class="md-nav__link">
+    Force Reload
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    Training
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-results" class="md-nav__link">
+    Base64 Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-results" class="md-nav__link">
+    JSON Results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-models" class="md-nav__link">
+    Custom Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    Environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    Status
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ultralytics/yolov5/edit/master/docs/tutorials/pytorch-hub.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>PyTorch Hub</h1>
+                
+                <p>📚 This guide explains how to load YOLOv5 🚀 from PyTorch Hub https://pytorch.org/hub/ultralytics_yolov5</p>
+<h2 id="before-you-start">Before You Start</h2>
+<p>Start from a <strong>Python&gt;=3.8</strong> environment with <strong>PyTorch&gt;=1.7</strong> installed, as well as <code>pyyaml&gt;=5.3</code> for reading YOLOv5 configuration files. To install PyTorch see <a href="https://pytorch.org/get-started/locally">https://pytorch.org/get-started/locally</a>. To install YOLOv5 <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements</a>:</p>
+<pre><code class="language-bash">$ pip install -r https://raw.githubusercontent.com/ultralytics/yolov5/master/requirements.txt
+</code></pre>
+<p>Cloning the <a href="https://github.com/ultralytics/yolov5">https://github.com/ultralytics/yolov5</a> repository is <strong>not</strong> required 😃.</p>
+<h2 id="load-yolov5-with-pytorch-hub">Load YOLOv5 with PyTorch Hub</h2>
+<h3 id="simple-example">Simple Example</h3>
+<p>This example loads a pretrained YOLOv5s model from PyTorch Hub as <code>model</code> and passes an image for inference. <code>'yolov5s'</code> is the lightest and fastest YOLOv5 model. For details on all available models please see the <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">README</a>.</p>
+<pre><code class="language-python">import torch
+
+# Model
+model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+
+# Image
+img = 'https://ultralytics.com/images/zidane.jpg'
+
+# Inference
+results = model(img)
+</code></pre>
+<h3 id="detailed-example">Detailed Example</h3>
+<p>This example shows <strong>batched inference</strong> with <strong>PIL</strong> and <strong>OpenCV</strong> image sources. <code>results</code> can be <strong>printed</strong> to console, <strong>saved</strong> to <code>runs/hub</code>, <strong>showed</strong> to screen on supported environments, and returned as <strong>tensors</strong> or <strong>pandas</strong> dataframes.</p>
+<pre><code class="language-python">import cv2
+import torch
+from PIL import Image
+
+# Model
+model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+
+# Images
+for f in ['zidane.jpg', 'bus.jpg']:
+    torch.hub.download_url_to_file('https://ultralytics.com/images/' + f, f)  # download 2 images
+img1 = Image.open('zidane.jpg')  # PIL image
+img2 = cv2.imread('bus.jpg')[:, :, ::-1]  # OpenCV image (BGR to RGB)
+imgs = [img1, img2]  # batch of images
+
+# Inference
+results = model(imgs, size=640)  # includes NMS
+
+# Results
+results.print()  
+results.save()  # or .show()
+
+results.xyxy[0]  # img1 predictions (tensor)
+results.pandas().xyxy[0]  # img1 predictions (pandas)
+#      xmin    ymin    xmax   ymax  confidence  class    name
+# 0  749.50   43.50  1148.0  704.5    0.874023      0  person
+# 1  433.50  433.50   517.5  714.5    0.687988     27     tie
+# 2  114.75  195.75  1095.0  708.0    0.624512      0  person
+# 3  986.00  304.00  1028.0  420.0    0.286865     27     tie
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/26833433/114868289-08cb7800-9df6-11eb-85ca-58545cf45a83.png" width="500">  <img src="https://user-images.githubusercontent.com/26833433/114868505-47613280-9df6-11eb-9cb0-c383358d37d2.png" width="300"></p>
+<p>For all inference options see YOLOv5 <code>autoShape()</code> forward method:
+https://github.com/ultralytics/yolov5/blob/3551b072b366989b82b3777c63ea485a99e0bf90/models/common.py#L182-L191</p>
+<h3 id="inference-settings">Inference Settings</h3>
+<p>Inference settings such as <strong>confidence threshold</strong>, NMS <strong>IoU threshold</strong>, and <strong>classes</strong> filter are model attributes, and can be modified by:</p>
+<pre><code class="language-python">model.conf = 0.25  # confidence threshold (0-1)
+model.iou = 0.45  # NMS IoU threshold (0-1)
+model.classes = None  # (optional list) filter by class, i.e. = [0, 15, 16] for persons, cats and dogs
+
+results = model(imgs, size=320)  # custom inference size
+</code></pre>
+<h3 id="input-channels">Input Channels</h3>
+<p>To load a pretrained YOLOv5s model with 4 input channels rather than the default 3:</p>
+<pre><code class="language-python">model = torch.hub.load('ultralytics/yolov5', 'yolov5s', channels=4)
+</code></pre>
+<p>In this case the model will be composed of pretrained weights <strong>except for</strong> the very first input layer, which is no longer the same shape as the pretrained input layer. The input layer will remain initialized by random weights.</p>
+<h3 id="number-of-classes">Number of Classes</h3>
+<p>To load a pretrained YOLOv5s model with 10 output classes rather than the default 80:</p>
+<pre><code class="language-python">model = torch.hub.load('ultralytics/yolov5', 'yolov5s', classes=10)
+</code></pre>
+<p>In this case the model will be composed of pretrained weights <strong>except for</strong> the output layers, which are no longer the same shape as the pretrained output layers. The output layers will remain initialized by random weights.</p>
+<h3 id="force-reload">Force Reload</h3>
+<p>If you run into problems with the above steps, setting <code>force_reload=True</code> may help by discarding the existing cache and force a fresh download of the latest YOLOv5 version from PyTorch Hub.</p>
+<pre><code class="language-python">model = torch.hub.load('ultralytics/yolov5', 'yolov5s', force_reload=True)  # force reload
+</code></pre>
+<h3 id="training">Training</h3>
+<p>To load a YOLOv5 model for training rather than inference, set <code>autoshape=False</code>. To load a model with randomly initialized weights (to train from scratch) use <code>pretrained=False</code>.</p>
+<pre><code class="language-python">model = torch.hub.load('ultralytics/yolov5', 'yolov5s', autoshape=False)  # load pretrained
+model = torch.hub.load('ultralytics/yolov5', 'yolov5s', autoshape=False, pretrained=False)  # load scratch
+</code></pre>
+<h3 id="base64-results">Base64 Results</h3>
+<p>For use with API services. See https://github.com/ultralytics/yolov5/pull/2291 and <a href="https://github.com/ultralytics/yolov5/tree/master/utils/flask_rest_api">Flask REST API</a> example for details.</p>
+<pre><code class="language-python">results = model(imgs)  # inference
+
+results.imgs # array of original images (as np array) passed to model for inference
+results.render()  # updates results.imgs with boxes and labels
+for img in results.imgs:
+    buffered = BytesIO()
+    img_base64 = Image.fromarray(img)
+    img_base64.save(buffered, format=&quot;JPEG&quot;)
+    print(base64.b64encode(buffered.getvalue()).decode('utf-8'))  # base64 encoded image with results
+</code></pre>
+<h3 id="json-results">JSON Results</h3>
+<p>Results can be returned in JSON format once converted to <code>.pandas()</code> dataframes using the <code>.to_json()</code> method. The JSON format can be modified using the <code>orient</code> argument. See pandas <code>.to_json()</code> <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html">documentation</a> for details.</p>
+<pre><code class="language-python">results = model(imgs)  # inference
+
+results.pandas().xyxy[0].to_json(orient=&quot;records&quot;)  # JSON img1 predictions
+</code></pre>
+<details>
+  <summary>JSON Output (click to expand)</summary>
+
+  ```json
+[
+{"xmin":749.5,"ymin":43.5,"xmax":1148.0,"ymax":704.5,"confidence":0.8740234375,"class":0,"name":"person"},
+{"xmin":433.5,"ymin":433.5,"xmax":517.5,"ymax":714.5,"confidence":0.6879882812,"class":27,"name":"tie"},
+{"xmin":115.25,"ymin":195.75,"xmax":1096.0,"ymax":708.0,"confidence":0.6254882812,"class":0,"name":"person"},
+{"xmin":986.0,"ymin":304.0,"xmax":1028.0,"ymax":420.0,"confidence":0.2873535156,"class":27,"name":"tie"}
+]
+  ```
+</details>
+
+<h2 id="custom-models">Custom Models</h2>
+<p>This example loads a custom 20-class <a href="https://github.com/ultralytics/yolov5/blob/master/data/voc.yaml">VOC</a>-trained YOLOv5s model <code>'best.pt'</code> with PyTorch Hub.</p>
+<pre><code class="language-python">model = torch.hub.load('ultralytics/yolov5', 'custom', path='path/to/best.pt')  # default
+model = torch.hub.load('path/to/yolov5', 'custom', path='path/to/best.pt', source='local')  # local repo
+</code></pre>
+<h2 id="environments">Environments</h2>
+<p>YOLOv5 may be run in any of the following up-to-date verified environments (with all dependencies including <a href="https://developer.nvidia.com/cuda">CUDA</a>/<a href="https://developer.nvidia.com/cudnn">CUDNN</a>, <a href="https://www.python.org/">Python</a> and <a href="https://pytorch.org/">PyTorch</a> preinstalled):</p>
+<ul>
+<li><strong>Google Colab and Kaggle</strong> notebooks with free GPU: <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> <a href="https://www.kaggle.com/ultralytics/yolov5"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a></li>
+<li><strong>Google Cloud</strong> Deep Learning VM. See <a href="https://github.com/ultralytics/yolov5/wiki/GCP-Quickstart">GCP Quickstart Guide</a></li>
+<li><strong>Amazon</strong> Deep Learning AMI. See <a href="https://github.com/ultralytics/yolov5/wiki/AWS-Quickstart">AWS Quickstart Guide</a></li>
+<li><strong>Docker Image</strong>. See <a href="https://github.com/ultralytics/yolov5/wiki/Docker-Quickstart">Docker Quickstart Guide</a> <a href="https://hub.docker.com/r/ultralytics/yolov5"><img src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" alt="Docker Pulls"></a></li>
+</ul>
+<h2 id="status">Status</h2>
+<p><img alt="CI CPU testing" src="https://github.com/ultralytics/yolov5/workflows/CI%20CPU%20testing/badge.svg" /></p>
+<p>If this badge is green, all <a href="https://github.com/ultralytics/yolov5/actions">YOLOv5 GitHub Actions</a> Continuous Integration (CI) tests are currently passing. CI tests verify correct operation of YOLOv5 training (<a href="https://github.com/ultralytics/yolov5/blob/master/train.py">train.py</a>), testing (<a href="https://github.com/ultralytics/yolov5/blob/master/test.py">test.py</a>), inference (<a href="https://github.com/ultralytics/yolov5/blob/master/detect.py">detect.py</a>) and export (<a href="https://github.com/ultralytics/yolov5/blob/master/models/export.py">export.py</a>) on MacOS, Windows, and Ubuntu every 24 hours and on every commit.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+  <footer class="md-footer">
+    
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          <a href="../multi-gpu-training/" class="md-footer__link md-footer__link--prev" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                Multi-GPU Training
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../torchscript-onnx-coreml-export/" class="md-footer__link md-footer__link--next" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                TorchScript, ONNX, CoreML Export
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </footer>
+  
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top", "navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d892486b.min.js"></script>
+      
+    
+  </body>
+</html>
