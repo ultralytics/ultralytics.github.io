@@ -31,7 +31,7 @@ theme:
   name: material
   custom_dir: theme-overrides
   favicon: img/favicon.ico
-  logo: img/logo-blue.png
+  logo: img/logo-black.png
   features:
     - navigation.instant
     - navigation.top
