@@ -2,13 +2,27 @@ site_name: YOLOv5 Documentation
 nav:
   - Introduction: index.md
   - Quick Start: quick-start.md
+  - Environments:
+      Amazon Web Services: environments/AWS-Quickstart.md
+      Docker: environments/Docker-Quickstart.md
+      Google Cloud Platform: environments/GCP-Quickstart.md
   - Tutorials:
-      Recommended: tutorials/recommended.md
-      Latest: tutorials/latest.md
-      Categories: tutorials/tutorials.md
-  - Archives:
-      GitHub: tutorials/articles/github.md
-      Train Custom Models: tutorials/articles/train-custom-models.md
+      Train Custom Data 📌: tutorials/train-custom-datasets.md
+      Tips for Best Training Results 📌: tutorials/training-tips-best-results.md
+      Weights & Biases Logging 🆕: tutorials/weights-and-biasis-logging.md
+      Supervisely Ecosystem 🆕: tutorials/supervisely-ecosystem.md
+      Multi-GPU Training: tutorials/multi-gpu-training.md
+      PyTorch Hub:  tutorials/pytorch-hub.md
+      TorchScript, ONNX, CoreML Export: tutorials/torchscript-onnx-coreml-export.md
+      Test-Time Augmentation (TTA): tutorials/test-time-augmentation.md
+      Model Ensembling: tutorials/model-ensembling.md
+      Model Pruning/Sparsity: tutorials/pruning-sparsity.md
+      Hyperparameter Evolution: tutorials/hyperparameter-evolution.md
+      Transfer Learning with Frozen Layers: tutorials/transfer-learning-froze-layers.md
+      TensorRT Deployment: https://github.com/wang-xinyu/tensorrtx/tree/master/yolov5
+
+repo_url: https://github.com/ultralytics/yolov5
+repo_name: ultralytics/yolov5
 
 theme:
   name: material
@@ -16,10 +30,10 @@ theme:
   favicon: img/favicon.ico
   logo: img/logo-blue.png
   features:
-    - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.instant
     - navigation.top
     - navigation.sections
-    - toc.integrate
+
+extra_css:
+  - stylesheets/extra.css
 

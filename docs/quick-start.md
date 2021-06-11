@@ -34,9 +34,9 @@ For a quick and hassle free setup YOLOv5 has been packaged with all dependencies
 _*including [CUDA](https://developer.nvidia.com/cuda)/[CUDNN](https://developer.nvidia.com/cudnn), [Python](https://www.python.org/) and [PyTorch](https://pytorch.org/)_
 
 - **Google Colab and Kaggle** notebooks with free GPU: <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> <a href="https://www.kaggle.com/ultralytics/yolov5"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a>
-- **Google Cloud** Deep Learning VM. See [GCP Quickstart Guide](tutorials/articles/GCP-Quickstart.md)
-- **Amazon** Deep Learning AMI. See [AWS Quickstart Guide](tutorials/articles/AWS-Quickstart.md)
-- **Docker Image**. See [Docker Quickstart Guide](tutorials/articles/Docker-Quickstart.md) <a href="https://hub.docker.com/r/ultralytics/yolov5"><img src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" alt="Docker Pulls"></a>
+- **Google Cloud** Deep Learning VM. See [GCP Quickstart Guide](environments/GCP-Quickstart.md)
+- **Amazon** Deep Learning AMI. See [AWS Quickstart Guide](environments/AWS-Quickstart.md)
+- **Docker Image**. See [Docker Quickstart Guide](environments/Docker-Quickstart.md) <a href="https://hub.docker.com/r/ultralytics/yolov5"><img src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" alt="Docker Pulls"></a>
 
 ## Inference - Detect Objects
 ---
@@ -83,7 +83,3 @@ imgs = [dir + f for f in ('zidane.jpg', 'bus.jpg')]  # batch of images
 results = model(imgs)
 results.print()  # or .show(), .save()
 ```
-
-## Training Models
----
-Check out the [tutorial section](tutorials/tutorials.md) for guides on training custom models
