@@ -699,15 +699,15 @@
 <p>*<em>If you have mutliple versions of python installed, ensure you are using the correct one</em></p>
 <h2 id="installation">Installation</h2>
 <hr />
-<p>Clone the repository</p>
-<pre><code class="language-bash">$ git clone https://github.com/ultralytics/yolov5.git
-</code></pre>
-<p>Enter the repository root directory</p>
-<pre><code class="language-bash">$ cd yolov5
-</code></pre>
-<p>Install the required packages from your cloned repository root directory</p>
-<pre><code class="language-bash">$ pip install -r requirements.txt
-</code></pre>
+<p>Clone the repository
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ git clone https://github.com/ultralytics/yolov5.git
+</code></pre></div></p>
+<p>Enter the repository root directory
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ <span class="nb">cd</span> yolov5
+</code></pre></div></p>
+<p>Install the required packages from your cloned repository root directory
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ pip install -r requirements.txt
+</code></pre></div></p>
 <h2 id="packaged-environments">Packaged Environments</h2>
 <hr />
 <p>For a quick and hassle free setup YOLOv5 has been packaged with all dependencies* for the following environments  </p>
@@ -721,10 +721,10 @@
 <h2 id="inference-detect-objects">Inference - Detect Objects</h2>
 <hr />
 <h3 id="from-your-cloned-repository">From Your Cloned Repository</h3>
-<p>To get started with object detection using the <a href="https://github.com/ultralytics/yolov5/releases">latest YOLO models</a>, run this command from your repository root directory. Results are saved to './runs/detect'</p>
-<pre><code class="language-bash">$ python detect.py --source OPTION
-</code></pre>
-<p>Replace OPTION with your selection, to detect from:  </p>
+<p>To get started with object detection using the <a href="https://github.com/ultralytics/yolov5/releases">latest YOLO models</a>, run this command from your repository root directory. Results are saved to './runs/detect'
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ python detect.py --source OPTION
+</code></pre></div>
+Replace OPTION with your selection, to detect from:  </p>
 <ul>
 <li><strong>Webcam</strong> : (OPTION = 0) <em>For live object detection from your connected webcam</em></li>
 <li><strong>Image</strong> : (OPTION = filename.jpg) <em>Create a copy of the image with an object detection overlay</em></li>
@@ -743,19 +743,19 @@
 <h3 id="from-pytorch-hub">From PyTorch Hub</h3>
 <p>Inference can be run directly from PyTorch Hub without cloning the repository. The necesary files will be downloaded into your temporary directory.</p>
 <p>Here is an example script that uses the <a href="https://github.com/ultralytics/yolov5/releases">latest YOLOv5s model</a> and the repositories example images.</p>
-<pre><code class="language-python">import torch
-
-# Model
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-
-# Images
-dir = 'https://github.com/ultralytics/yolov5/raw/master/data/images/'
-imgs = [dir + f for f in ('zidane.jpg', 'bus.jpg')]  # batch of images
-
-# Inference
-results = model(imgs)
-results.print()  # or .show(), .save()
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">torch</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Model</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;ultralytics/yolov5&#39;</span><span class="p">,</span> <span class="s1">&#39;yolov5s&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># Images</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nb">dir</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/ultralytics/yolov5/raw/master/data/images/&#39;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dir</span> <span class="o">+</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;zidane.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;bus.jpg&#39;</span><span class="p">)]</span>  <span class="c1"># batch of images</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># Inference</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="n">results</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>  <span class="c1"># or .show(), .save()</span>
+</code></pre></div>
 
               
             </article>

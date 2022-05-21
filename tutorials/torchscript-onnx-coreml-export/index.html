@@ -666,35 +666,35 @@
 <p>📚 This guide explains how to export a trained YOLOv5 🚀 model from PyTorch to ONNX and TorchScript formats.</p>
 <h2 id="before-you-start">Before You Start</h2>
 <p>Clone this repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch==1.7</strong>.</p>
-<pre><code class="language-bash">git clone https://github.com/ultralytics/yolov5  # clone repo
-cd yolov5
-pip install -r requirements.txt  # base requirements
-pip install coremltools&gt;=4.1 onnx&gt;=1.9.0 scikit-learn==0.19.2  # export requirements
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone https://github.com/ultralytics/yolov5  <span class="c1"># clone repo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span> yolov5
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip install -r requirements.txt  <span class="c1"># base requirements</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>pip install coremltools&gt;<span class="o">=</span><span class="m">4</span>.1 onnx&gt;<span class="o">=</span><span class="m">1</span>.9.0 scikit-learn<span class="o">==</span><span class="m">0</span>.19.2  <span class="c1"># export requirements</span>
+</code></pre></div>
 <h2 id="export-a-trained-yolov5-model">Export a Trained YOLOv5 Model</h2>
-<p>This command exports a pretrained YOLOv5s model to ONNX, TorchScript and CoreML formats. <code>yolov5s.pt</code> is the lightest and fastest model available. Other options are <code>yolov5m.pt</code>, <code>yolov5l.pt</code> and <code>yolov5x.pt</code>, or you own checkpoint from training a custom dataset <code>runs/exp0/weights/best.pt</code>. For details on all available models please see our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a>.</p>
-<pre><code class="language-bash">python models/export.py --weights yolov5s.pt --img 640 --batch 1  # export at 640x640 with batch size 1
-</code></pre>
-<p>Output:</p>
-<pre><code>Namespace(batch_size=1, device='cpu', dynamic=False, half=False, img_size=[640, 640], include=['torchscript', 'onnx', 'coreml'], inplace=False, optimize=False, simplify=False, train=True, weights='./yolov5s.pt')
-YOLOv5 🚀 v5.0-87-gf12cef8 torch 1.8.1+cu101 CPU
-
-Fusing layers... 
-Model Summary: 224 layers, 7266973 parameters, 0 gradients
-
-PyTorch: starting from ./yolov5s.pt (14.8 MB)
-
-TorchScript: starting export with torch 1.8.1+cu101...
-TorchScript: export success, saved as ./yolov5s.torchscript.pt (29.4 MB)
-
-ONNX: starting export with onnx 1.9.0...
-ONNX: export success, saved as ./yolov5s.onnx (29.1 MB)
-
-CoreML: starting export with coremltools 4.1...
-CoreML: export success, saved as ./yolov5s.mlmodel (29.1 MB)
-
-Export complete (10.40s). Visualize with https://github.com/lutzroeder/netron.
-</code></pre>
+<p>This command exports a pretrained YOLOv5s model to ONNX, TorchScript and CoreML formats. <code>yolov5s.pt</code> is the lightest and fastest model available. Other options are <code>yolov5m.pt</code>, <code>yolov5l.pt</code> and <code>yolov5x.pt</code>, or you own checkpoint from training a custom dataset <code>runs/exp0/weights/best.pt</code>. For details on all available models please see our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python models/export.py --weights yolov5s.pt --img <span class="m">640</span> --batch <span class="m">1</span>  <span class="c1"># export at 640x640 with batch size 1</span>
+</code></pre></div></p>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Namespace(batch_size=1, device=&#39;cpu&#39;, dynamic=False, half=False, img_size=[640, 640], include=[&#39;torchscript&#39;, &#39;onnx&#39;, &#39;coreml&#39;], inplace=False, optimize=False, simplify=False, train=True, weights=&#39;./yolov5s.pt&#39;)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>YOLOv5 🚀 v5.0-87-gf12cef8 torch 1.8.1+cu101 CPU
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Fusing layers... 
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Model Summary: 224 layers, 7266973 parameters, 0 gradients
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>PyTorch: starting from ./yolov5s.pt (14.8 MB)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>TorchScript: starting export with torch 1.8.1+cu101...
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>TorchScript: export success, saved as ./yolov5s.torchscript.pt (29.4 MB)
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>ONNX: starting export with onnx 1.9.0...
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>ONNX: export success, saved as ./yolov5s.onnx (29.1 MB)
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>CoreML: starting export with coremltools 4.1...
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>CoreML: export success, saved as ./yolov5s.mlmodel (29.1 MB)
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>Export complete (10.40s). Visualize with https://github.com/lutzroeder/netron.
+</code></pre></div></p>
 <p>The 3 exported models will be saved alongside the original PyTorch model:</p>
 <p align="center"><img width="800" src="https://user-images.githubusercontent.com/26833433/112540320-53874080-8db2-11eb-9e8c-e2a8ae4c710a.jpg"></p>
 

@@ -706,96 +706,96 @@
 <p>📚 This guide explains how to use Test Time Augmentation (TTA) during testing and inference for improved mAP and Recall with YOLOv5 🚀.</p>
 <h2 id="before-you-start">Before You Start</h2>
 <p>Clone this repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch&gt;=1.7</strong>.</p>
-<pre><code class="language-bash">git clone https://github.com/ultralytics/yolov5 # clone repo
-cd yolov5
-pip install -r requirements.txt # install requirements.txt
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone https://github.com/ultralytics/yolov5 <span class="c1"># clone repo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span> yolov5
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip install -r requirements.txt <span class="c1"># install requirements.txt</span>
+</code></pre></div>
 <h2 id="test-normally">Test Normally</h2>
-<p>Before trying TTA we want to establish the baseline performance by testing under default settings. This command tests YOLOv5x on COCO val2017 at image size 640 pixels. <code>yolov5x.pt</code> is the largest and most accurate model available. Other options are <code>yolov5s.pt</code>, <code>yolov5m.pt</code> and <code>yolov5l.pt</code>, or you own checkpoint from training a custom dataset <code>./weights/best.pt</code>. For details on all available models please see our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a>.</p>
-<pre><code class="language-bash">$ python test.py --weights yolov5x.pt --data coco.yaml --img 640
-</code></pre>
-<p>Output:</p>
-<pre><code class="language-shell">Namespace(augment=False, batch_size=32, conf_thres=0.001, data='./data/coco.yaml', device='', img_size=640, iou_thres=0.65, save_json=True, save_txt=False, single_cls=False, task='val', verbose=False, weights=['yolov5x.pt'])
-Using CUDA device0 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', total_memory=16280MB)
-
-Fusing layers... Model Summary: 284 layers, 8.89222e+07 parameters, 0 gradients
-Scanning labels ../coco/labels/val2017.cache (4952 found, 0 missing, 48 empty, 0 duplicate, for 5000 images): 5000it [00:00, 17761.74it/s]
-               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100% 157/157 [02:34&lt;00:00,  1.02it/s]
-                 all       5e+03    3.63e+04       0.409       0.754       0.669       0.476
-Speed: 23.6/1.6/25.2 ms inference/NMS/total per 640x640 image at batch-size 32 &lt; ---------- baseline speed
-
-COCO mAP with pycocotools... saving detections_val2017__results.json...
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.492 &lt; ---------- baseline mAP
- Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.676
- Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.534
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.318
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.541
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.633
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.376
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.616
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.670 &lt; ---------- baseline mAR
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.493
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.723
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.812
-</code></pre>
+<p>Before trying TTA we want to establish the baseline performance by testing under default settings. This command tests YOLOv5x on COCO val2017 at image size 640 pixels. <code>yolov5x.pt</code> is the largest and most accurate model available. Other options are <code>yolov5s.pt</code>, <code>yolov5m.pt</code> and <code>yolov5l.pt</code>, or you own checkpoint from training a custom dataset <code>./weights/best.pt</code>. For details on all available models please see our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ python test.py --weights yolov5x.pt --data coco.yaml --img <span class="m">640</span>
+</code></pre></div></p>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Namespace<span class="o">(</span><span class="nv">augment</span><span class="o">=</span>False, <span class="nv">batch_size</span><span class="o">=</span><span class="m">32</span>, <span class="nv">conf_thres</span><span class="o">=</span><span class="m">0</span>.001, <span class="nv">data</span><span class="o">=</span><span class="s1">&#39;./data/coco.yaml&#39;</span>, <span class="nv">device</span><span class="o">=</span><span class="s1">&#39;&#39;</span>, <span class="nv">img_size</span><span class="o">=</span><span class="m">640</span>, <span class="nv">iou_thres</span><span class="o">=</span><span class="m">0</span>.65, <span class="nv">save_json</span><span class="o">=</span>True, <span class="nv">save_txt</span><span class="o">=</span>False, <span class="nv">single_cls</span><span class="o">=</span>False, <span class="nv">task</span><span class="o">=</span><span class="s1">&#39;val&#39;</span>, <span class="nv">verbose</span><span class="o">=</span>False, <span class="nv">weights</span><span class="o">=[</span><span class="s1">&#39;yolov5x.pt&#39;</span><span class="o">])</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Using CUDA device0 _CudaDeviceProperties<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Tesla P100-PCIE-16GB&#39;</span>, <span class="nv">total_memory</span><span class="o">=</span>16280MB<span class="o">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Fusing layers... Model Summary: <span class="m">284</span> layers, <span class="m">8</span>.89222e+07 parameters, <span class="m">0</span> gradients
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Scanning labels ../coco/labels/val2017.cache <span class="o">(</span><span class="m">4952</span> found, <span class="m">0</span> missing, <span class="m">48</span> empty, <span class="m">0</span> duplicate, <span class="k">for</span> <span class="m">5000</span> images<span class="o">)</span>: 5000it <span class="o">[</span><span class="m">00</span>:00, <span class="m">17761</span>.74it/s<span class="o">]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: <span class="m">100</span>% <span class="m">157</span>/157 <span class="o">[</span><span class="m">02</span>:34&lt;<span class="m">00</span>:00,  <span class="m">1</span>.02it/s<span class="o">]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>                 all       5e+03    <span class="m">3</span>.63e+04       <span class="m">0</span>.409       <span class="m">0</span>.754       <span class="m">0</span>.669       <span class="m">0</span>.476
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Speed: <span class="m">23</span>.6/1.6/25.2 ms inference/NMS/total per 640x640 image at batch-size <span class="m">32</span> &lt; ---------- baseline speed
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>COCO mAP with pycocotools... saving detections_val2017__results.json...
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.492 &lt; ---------- baseline mAP
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.676
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.75      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.534
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.318
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.541
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.633
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span>  <span class="m">1</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.376
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span> <span class="m">10</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.616
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.670 &lt; ---------- baseline mAR
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.493
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.723
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.812
+</code></pre></div></p>
 <h2 id="test-with-tta">Test with TTA</h2>
-<p>Append <code>--augment</code> to any existing <code>test.py</code> command to enable TTA, and increase the image size by about 30% for improved results. Note that inference with TTA enabled will typically take about 2-3X the time of normal inference as the images are being left-right flipped and processed at 3 different resolutions, with the outputs merged before NMS. Part of the speed decrease is simply due to larger image sizes (832 vs 640), while part is due to the actual TTA operations.</p>
-<pre><code class="language-bash">$ python test.py --weights yolov5x.pt --data coco.yaml --img 832 --augment
-</code></pre>
-<p>Output:</p>
-<pre><code class="language-shell">Namespace(augment=True, batch_size=32, conf_thres=0.001, data='./data/coco.yaml', device='', img_size=832, iou_thres=0.65, save_json=True, save_txt=False, single_cls=False, task='val', verbose=False, weights=['yolov5x.pt'])
-Using CUDA device0 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', total_memory=16280MB)
-
-Fusing layers... Model Summary: 284 layers, 8.89222e+07 parameters, 0 gradients
-Scanning labels ../coco/labels/val2017.cache (4952 found, 0 missing, 48 empty, 0 duplicate, for 5000 images): 5000it [00:00, 17064.47it/s]
-               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100% 157/157 [07:54&lt;00:00,  3.02s/it]
-                 all       5e+03    3.63e+04       0.309       0.807       0.682       0.492
-Speed: 85.1/3.6/88.7 ms inference/NMS/total per 832x832 image at batch-size 32 &lt; ---------- reduced speed
-
-COCO mAP with pycocotools... saving detections_val2017__results.json...
-...
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.508 &lt; ---------- improved mAP
- Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.689
- Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.556
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.346
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.557
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.648
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.385
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.635
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.696 &lt; ---------- improved mAR
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.536
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.740
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.826
-</code></pre>
+<p>Append <code>--augment</code> to any existing <code>test.py</code> command to enable TTA, and increase the image size by about 30% for improved results. Note that inference with TTA enabled will typically take about 2-3X the time of normal inference as the images are being left-right flipped and processed at 3 different resolutions, with the outputs merged before NMS. Part of the speed decrease is simply due to larger image sizes (832 vs 640), while part is due to the actual TTA operations.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ python test.py --weights yolov5x.pt --data coco.yaml --img <span class="m">832</span> --augment
+</code></pre></div></p>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Namespace<span class="o">(</span><span class="nv">augment</span><span class="o">=</span>True, <span class="nv">batch_size</span><span class="o">=</span><span class="m">32</span>, <span class="nv">conf_thres</span><span class="o">=</span><span class="m">0</span>.001, <span class="nv">data</span><span class="o">=</span><span class="s1">&#39;./data/coco.yaml&#39;</span>, <span class="nv">device</span><span class="o">=</span><span class="s1">&#39;&#39;</span>, <span class="nv">img_size</span><span class="o">=</span><span class="m">832</span>, <span class="nv">iou_thres</span><span class="o">=</span><span class="m">0</span>.65, <span class="nv">save_json</span><span class="o">=</span>True, <span class="nv">save_txt</span><span class="o">=</span>False, <span class="nv">single_cls</span><span class="o">=</span>False, <span class="nv">task</span><span class="o">=</span><span class="s1">&#39;val&#39;</span>, <span class="nv">verbose</span><span class="o">=</span>False, <span class="nv">weights</span><span class="o">=[</span><span class="s1">&#39;yolov5x.pt&#39;</span><span class="o">])</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Using CUDA device0 _CudaDeviceProperties<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Tesla P100-PCIE-16GB&#39;</span>, <span class="nv">total_memory</span><span class="o">=</span>16280MB<span class="o">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Fusing layers... Model Summary: <span class="m">284</span> layers, <span class="m">8</span>.89222e+07 parameters, <span class="m">0</span> gradients
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Scanning labels ../coco/labels/val2017.cache <span class="o">(</span><span class="m">4952</span> found, <span class="m">0</span> missing, <span class="m">48</span> empty, <span class="m">0</span> duplicate, <span class="k">for</span> <span class="m">5000</span> images<span class="o">)</span>: 5000it <span class="o">[</span><span class="m">00</span>:00, <span class="m">17064</span>.47it/s<span class="o">]</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: <span class="m">100</span>% <span class="m">157</span>/157 <span class="o">[</span><span class="m">07</span>:54&lt;<span class="m">00</span>:00,  <span class="m">3</span>.02s/it<span class="o">]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>                 all       5e+03    <span class="m">3</span>.63e+04       <span class="m">0</span>.309       <span class="m">0</span>.807       <span class="m">0</span>.682       <span class="m">0</span>.492
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Speed: <span class="m">85</span>.1/3.6/88.7 ms inference/NMS/total per 832x832 image at batch-size <span class="m">32</span> &lt; ---------- reduced speed
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>COCO mAP with pycocotools... saving detections_val2017__results.json...
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>...
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.508 &lt; ---------- improved mAP
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.689
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.75      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.556
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.346
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.557
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.648
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span>  <span class="m">1</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.385
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span> <span class="m">10</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.635
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.696 &lt; ---------- improved mAR
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.536
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.740
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.826
+</code></pre></div></p>
 <h2 id="inference-with-tta">Inference with TTA</h2>
-<p><code>detect.py</code> TTA inference operates identically to <code>test.py</code> TTA: simply append <code>--augment</code> to any existing <code>detect.py</code> command:</p>
-<pre><code class="language-bash">$ python detect.py --weights yolov5s.pt --img 832 --source ./inference/images/ --augment
-</code></pre>
-<p>Output:</p>
-<pre><code class="language-bash">Namespace(agnostic_nms=False, augment=True, classes=None, conf_thres=0.25, device='', img_size=832, iou_thres=0.45, output='inference/output', save_txt=False, source='./inference/images/', update=False, view_img=False, weights=['yolov5s.pt'])
-Using CUDA device0 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', total_memory=16280MB)
-
-Fusing layers... Model Summary: 140 layers, 7.45958e+06 parameters, 0 gradients
-image 1/2 /yolov5/inference/images/bus.jpg: 832x640 4 persons, 1 buss, Done. (0.037s)
-image 2/2 /yolov5/images/zidane.jpg: 512x832 2 persons, 3 ties, Done. (0.036s)
-Results saved to inference/output
-Done. (0.186s)
-</code></pre>
+<p><code>detect.py</code> TTA inference operates identically to <code>test.py</code> TTA: simply append <code>--augment</code> to any existing <code>detect.py</code> command:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ python detect.py --weights yolov5s.pt --img <span class="m">832</span> --source ./inference/images/ --augment
+</code></pre></div></p>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Namespace<span class="o">(</span><span class="nv">agnostic_nms</span><span class="o">=</span>False, <span class="nv">augment</span><span class="o">=</span>True, <span class="nv">classes</span><span class="o">=</span>None, <span class="nv">conf_thres</span><span class="o">=</span><span class="m">0</span>.25, <span class="nv">device</span><span class="o">=</span><span class="s1">&#39;&#39;</span>, <span class="nv">img_size</span><span class="o">=</span><span class="m">832</span>, <span class="nv">iou_thres</span><span class="o">=</span><span class="m">0</span>.45, <span class="nv">output</span><span class="o">=</span><span class="s1">&#39;inference/output&#39;</span>, <span class="nv">save_txt</span><span class="o">=</span>False, <span class="nv">source</span><span class="o">=</span><span class="s1">&#39;./inference/images/&#39;</span>, <span class="nv">update</span><span class="o">=</span>False, <span class="nv">view_img</span><span class="o">=</span>False, <span class="nv">weights</span><span class="o">=[</span><span class="s1">&#39;yolov5s.pt&#39;</span><span class="o">])</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Using CUDA device0 _CudaDeviceProperties<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Tesla P100-PCIE-16GB&#39;</span>, <span class="nv">total_memory</span><span class="o">=</span>16280MB<span class="o">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Fusing layers... Model Summary: <span class="m">140</span> layers, <span class="m">7</span>.45958e+06 parameters, <span class="m">0</span> gradients
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>image <span class="m">1</span>/2 /yolov5/inference/images/bus.jpg: 832x640 <span class="m">4</span> persons, <span class="m">1</span> buss, Done. <span class="o">(</span><span class="m">0</span>.037s<span class="o">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>image <span class="m">2</span>/2 /yolov5/images/zidane.jpg: 512x832 <span class="m">2</span> persons, <span class="m">3</span> ties, Done. <span class="o">(</span><span class="m">0</span>.036s<span class="o">)</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Results saved to inference/output
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Done. <span class="o">(</span><span class="m">0</span>.186s<span class="o">)</span>
+</code></pre></div></p>
 <p><img src="https://user-images.githubusercontent.com/26833433/86539626-fb6e7e00-beb2-11ea-82a2-a394b7c20081.jpeg" width="500"></p>
 <h3 id="pytorch-hub-tta">PyTorch Hub TTA</h3>
-<p>TTA is automatically integrated into all <a href="https://pytorch.org/hub/ultralytics_yolov5">YOLOv5 PyTorch Hub</a> models, and can be accessed by passing <code>augment=True</code> at inference time.</p>
-<pre><code class="language-python">import torch
-
-# Model
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-
-# Images
-dir = 'https://github.com/ultralytics/yolov5/raw/master/data/images/'
-imgs = [dir + f for f in ('zidane.jpg', 'bus.jpg')]  # batch of images
-
-# Inference
-results = model(imgs, augment=True)  # TTA inference
-</code></pre>
+<p>TTA is automatically integrated into all <a href="https://pytorch.org/hub/ultralytics_yolov5">YOLOv5 PyTorch Hub</a> models, and can be accessed by passing <code>augment=True</code> at inference time.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">torch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Model</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;ultralytics/yolov5&#39;</span><span class="p">,</span> <span class="s1">&#39;yolov5s&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># Images</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nb">dir</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/ultralytics/yolov5/raw/master/data/images/&#39;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dir</span> <span class="o">+</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;zidane.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;bus.jpg&#39;</span><span class="p">)]</span>  <span class="c1"># batch of images</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Inference</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># TTA inference</span>
+</code></pre></div></p>
 <h2 id="environments">Environments</h2>
 <p>YOLOv5 may be run in any of the following up-to-date verified environments (with all dependencies including <a href="https://developer.nvidia.com/cuda">CUDA</a>/<a href="https://developer.nvidia.com/cudnn">CUDNN</a>, <a href="https://www.python.org/">Python</a> and <a href="https://pytorch.org/">PyTorch</a> preinstalled):</p>
 <ul>

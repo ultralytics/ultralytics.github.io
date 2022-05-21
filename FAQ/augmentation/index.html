@@ -638,10 +638,10 @@
 <p>YOLOv5 🚀 applies online imagespace and colorspace augmentations in the trainloader (but not the val_loader) to present a new and unique augmented <a href="https://github.com/ultralytics/yolov5/blob/90b7895d652c3bd3d361b2d6e9aee900fd67f5f7/utils/datasets.py#L678-L732">Mosaic</a> (original image + 3 random images) each time an image is loaded for training. <strong>Images are never presented twice in the same way</strong>.</p>
 <p><img alt="YOLOv5 augmentation" src="https://user-images.githubusercontent.com/26833433/120995721-f3cfed00-c785-11eb-8ee2-b6ef2fa205e8.jpg" /></p>
 <h3 id="augmentation-hyperparameters">Augmentation Hyperparameters</h3>
-<p>The hyperparameters used to define these augmentations are in your hyperparameter file (default <code>data/hyp.scratch.yaml</code>) defined when training:</p>
-<pre><code>python train.py --hyp hyp.scratch-low.yaml
-</code></pre>
-<p>https://github.com/ultralytics/yolov5/blob/b94b59e199047aa8bf2cdd4401ae9f5f42b929e6/data/hyps/hyp.scratch-low.yaml#L6-L34</p>
+<p>The hyperparameters used to define these augmentations are in your hyperparameter file (default <code>data/hyp.scratch.yaml</code>) defined when training:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python train.py --hyp hyp.scratch-low.yaml
+</code></pre></div>
+https://github.com/ultralytics/yolov5/blob/b94b59e199047aa8bf2cdd4401ae9f5f42b929e6/data/hyps/hyp.scratch-low.yaml#L6-L34</p>
 <h3 id="augmentation-previews">Augmentation Previews</h3>
 <p>You can view the effect of your augmentation policy in your train_batch*.jpg images once training starts. These images will be in your train logging directory, typically <code>yolov5/runs/train/exp</code>:</p>
 <p><code>train_batch0.jpg</code> shows train batch 0 mosaics and labels:<br />

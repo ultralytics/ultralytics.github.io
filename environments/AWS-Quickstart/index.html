@@ -749,23 +749,23 @@
 <p><img width="800" alt="Connect" src="https://user-images.githubusercontent.com/26833433/106325530-cf8c5e80-622f-11eb-9f64-5b313a9d57a1.png"></p>
 <h2 id="4-run-yolov5">4. Run YOLOv5 🚀</h2>
 <p>Once you have logged in to your instance, clone this repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch&gt;=1.7</strong>.</p>
-<pre><code class="language-bash">$ git clone https://github.com/ultralytics/yolov5  # clone repo
-$ cd yolov5
-$ pip install -r requirements.txt  # install dependencies
-</code></pre>
-<p>Then get started training, testing and detecting!</p>
-<pre><code class="language-bash">$ python train.py  # train a model
-$ python test.py --weights yolov5s.pt  # test a model for Precision, Recall and mAP
-$ python detect.py --weights yolov5s.pt --source path/to/images  # run inference on images and videos
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ git clone https://github.com/ultralytics/yolov5  <span class="c1"># clone repo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$ <span class="nb">cd</span> yolov5
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$ pip install -r requirements.txt  <span class="c1"># install dependencies</span>
+</code></pre></div>
+<p>Then get started training, testing and detecting!
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ python train.py  <span class="c1"># train a model</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$ python test.py --weights yolov5s.pt  <span class="c1"># test a model for Precision, Recall and mAP</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>$ python detect.py --weights yolov5s.pt --source path/to/images  <span class="c1"># run inference on images and videos</span>
+</code></pre></div></p>
 <h2 id="optional-extras">Optional Extras</h2>
-<p>Add 64GB of swap memory (to <code>--cache</code> large datasets).</p>
-<pre><code class="language-bash">sudo fallocate -l 64G /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-free -h  # check memory
-</code></pre>
+<p>Add 64GB of swap memory (to <code>--cache</code> large datasets).
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo fallocate -l 64G /swapfile
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo chmod <span class="m">600</span> /swapfile
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sudo mkswap /swapfile
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo swapon /swapfile
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>free -h  <span class="c1"># check memory</span>
+</code></pre></div></p>
 
               
             </article>

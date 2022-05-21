@@ -656,27 +656,27 @@
 - Nvidia-Docker https://github.com/NVIDIA/nvidia-docker
 - Docker Engine - CE &gt;= 19.03 https://docs.docker.com/install/</p>
 <h2 id="2-pull-image">2. Pull Image</h2>
-<p>The Ultralytics YOLOv5 DockerHub is https://hub.docker.com/r/ultralytics/yolov5 <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" />. <a href="https://docs.docker.com/docker-hub/builds/">Docker Autobuild</a> is used to automatically build images from the latest repository commits, so the <code>ultralytics/yolov5:latest</code> image hosted on the DockerHub <strong>will always be in sync with the most recent repository commit</strong>. To pull this image:</p>
-<pre><code class="language-bash">sudo docker pull ultralytics/yolov5:latest
-</code></pre>
+<p>The Ultralytics YOLOv5 DockerHub is https://hub.docker.com/r/ultralytics/yolov5 <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" />. <a href="https://docs.docker.com/docker-hub/builds/">Docker Autobuild</a> is used to automatically build images from the latest repository commits, so the <code>ultralytics/yolov5:latest</code> image hosted on the DockerHub <strong>will always be in sync with the most recent repository commit</strong>. To pull this image:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo docker pull ultralytics/yolov5:latest
+</code></pre></div></p>
 <h2 id="3-run-container">3. Run Container</h2>
-<p>Run an interactive instance of this image (called a "container") using <code>-it</code>:</p>
-<pre><code class="language-bash">sudo docker run --ipc=host -it ultralytics/yolov5:latest
-</code></pre>
-<p>Run a container with <strong>local file access</strong> (like COCO training data in <code>/coco</code>) using <code>-v</code>:</p>
-<pre><code class="language-bash">sudo docker run --ipc=host -it -v &quot;$(pwd)&quot;/coco:/usr/src/coco ultralytics/yolov5:latest
-</code></pre>
-<p>Run a container with <strong>GPU access</strong> using <code>--gpus all</code>:</p>
-<pre><code class="language-bash">sudo docker run --ipc=host --gpus all -it ultralytics/yolov5:latest
-</code></pre>
+<p>Run an interactive instance of this image (called a "container") using <code>-it</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo docker run --ipc<span class="o">=</span>host -it ultralytics/yolov5:latest
+</code></pre></div></p>
+<p>Run a container with <strong>local file access</strong> (like COCO training data in <code>/coco</code>) using <code>-v</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo docker run --ipc<span class="o">=</span>host -it -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>/coco:/usr/src/coco ultralytics/yolov5:latest
+</code></pre></div></p>
+<p>Run a container with <strong>GPU access</strong> using <code>--gpus all</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo docker run --ipc<span class="o">=</span>host --gpus all -it ultralytics/yolov5:latest
+</code></pre></div></p>
 <p align="center"><img width="900" src="https://user-images.githubusercontent.com/26833433/112548245-35264280-8dbc-11eb-990e-2aa89cd999ba.jpg"></p>
 
 <h2 id="4-run-commands">4. Run Commands</h2>
-<p>Run commands from within the running Docker container, i.e.:</p>
-<pre><code class="language-bash">$ python train.py  # train a model
-$ python test.py --weights yolov5s.pt  # test a model for Precision, Recall and mAP
-$ python detect.py --weights yolov5s.pt --source path/to/images  # run inference on images and videos
-</code></pre>
+<p>Run commands from within the running Docker container, i.e.:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ python train.py  <span class="c1"># train a model</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$ python test.py --weights yolov5s.pt  <span class="c1"># test a model for Precision, Recall and mAP</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>$ python detect.py --weights yolov5s.pt --source path/to/images  <span class="c1"># run inference on images and videos</span>
+</code></pre></div></p>
 
               
             </article>

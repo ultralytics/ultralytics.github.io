@@ -762,26 +762,26 @@
 <p>📚 This guide explains how to properly use <strong>multiple</strong> GPUs to train a dataset with YOLOv5 🚀 on single or multiple machine(s).</p>
 <h2 id="before-you-start">Before You Start</h2>
 <p>Clone this repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch&gt;=1.7</strong>.</p>
-<pre><code class="language-bash">git clone https://github.com/ultralytics/yolov5 # clone repo
-cd yolov5
-pip install -r requirements.txt
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone https://github.com/ultralytics/yolov5 <span class="c1"># clone repo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span> yolov5
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip install -r requirements.txt
+</code></pre></div>
 <h2 id="training">Training</h2>
 <p>Select a pretrained model to start training from. Here we select <a href="https://github.com/ultralytics/yolov5/blob/master/models/yolov5s.yaml">YOLOv5l</a>, the smallest model available. See our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a> for a full comparison of all models. We will train this model with Multi-GPU on the <a href="https://github.com/ultralytics/yolov5/blob/master/data/get_coco2017.sh">COCO</a> dataset.</p>
 <p align="center"><img width="700" alt="YOLOv5 Models" src="https://user-images.githubusercontent.com/26833433/103595982-ab986000-4eb1-11eb-8c57-4726261b0a88.png"></p>
 
 <h3 id="single-gpu">Single GPU</h3>
-<pre><code class="language-bash">$ python train.py  --batch-size 64 --data coco.yaml --weights yolov5s.pt --device 0
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ python train.py  --batch-size <span class="m">64</span> --data coco.yaml --weights yolov5s.pt --device <span class="m">0</span>
+</code></pre></div>
 <h3 id="multi-gpu-dataparallel-mode-not-recommended">Multi-GPU <a href="https://pytorch.org/docs/stable/nn.html#torch.nn.DataParallel">DataParallel</a> Mode (⚠️ not recommended)</h3>
-<p>You can increase the <code>device</code> to use Multiple GPUs in DataParallel mode.</p>
-<pre><code class="language-bash">$ python train.py  --batch-size 64 --data coco.yaml --weights yolov5s.pt --device 0,1
-</code></pre>
+<p>You can increase the <code>device</code> to use Multiple GPUs in DataParallel mode.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ python train.py  --batch-size <span class="m">64</span> --data coco.yaml --weights yolov5s.pt --device <span class="m">0</span>,1
+</code></pre></div></p>
 <p>This method is slow and barely speeds up training compared to using just 1 GPU.</p>
 <h3 id="multi-gpu-distributeddataparallel-mode-recommended">Multi-GPU <a href="https://pytorch.org/docs/stable/nn.html#torch.nn.parallel.DistributedDataParallel">DistributedDataParallel</a> Mode (✅ recommended)</h3>
 <p>You will have to pass <code>python -m torch.distributed.launch --nproc_per_node</code>, followed by the usual arguments.</p>
-<pre><code class="language-bash">$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ python -m torch.distributed.launch --nproc_per_node <span class="m">2</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --weights yolov5s.pt
+</code></pre></div>
 <p><code>--nproc_per_node</code> specifies how many GPUs you would like to use. In the example above, it is 2.
 <code>--batch-size</code> is now the Total batch-size. It will be divided evenly to each GPU. In the example above, it is 64/2=32 per GPU.</p>
 <p>The code above will use GPUs <code>0... (N-1)</code>.</p>
@@ -790,10 +790,8 @@ pip install -r requirements.txt
 
 You can do so by simply passing `--device` followed by your specific GPUs. For example, in the code below, we will use GPUs `2,3`.
 
-
-<pre><code class="language-bash">$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights '' --device 2,3
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ python -m torch.distributed.launch --nproc_per_node <span class="m">2</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --cfg yolov5s.yaml --weights <span class="s1">&#39;&#39;</span> --device <span class="m">2</span>,3
+</code></pre></div>
 
 </details>
 
@@ -807,10 +805,8 @@ It is best used when the batch-size on **each** GPU is small (<= 8).
 
 To use SyncBatchNorm, simple pass `--sync-bn` to the command like below, 
 
-
-<pre><code class="language-bash">$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights '' --sync-bn
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ python -m torch.distributed.launch --nproc_per_node <span class="m">2</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --cfg yolov5s.yaml --weights <span class="s1">&#39;&#39;</span> --sync-bn
+</code></pre></div>
 </details>
 
 <details>
@@ -824,16 +820,12 @@ You will have to choose a master machine(the machine that the others will talk t
 
 To use it, you can do as the following,
 
-
-<pre><code class="language-bash"># On master machine 0
-$ python -m torch.distributed.launch --nproc_per_node G --nnodes N --node_rank 0 --master_addr &quot;192.168.1.1&quot; --master_port 1234 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights ''
-</code></pre>
-
-
-<pre><code class="language-bash"># On machine R
-$ python -m torch.distributed.launch --nproc_per_node G --nnodes N --node_rank R --master_addr &quot;192.168.1.1&quot; --master_port 1234 train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights ''
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># On master machine 0</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$ python -m torch.distributed.launch --nproc_per_node G --nnodes N --node_rank <span class="m">0</span> --master_addr <span class="s2">&quot;192.168.1.1&quot;</span> --master_port <span class="m">1234</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --cfg yolov5s.yaml --weights <span class="s1">&#39;&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># On machine R</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>$ python -m torch.distributed.launch --nproc_per_node G --nnodes N --node_rank R --master_addr <span class="s2">&quot;192.168.1.1&quot;</span> --master_port <span class="m">1234</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --cfg yolov5s.yaml --weights <span class="s1">&#39;&#39;</span>
+</code></pre></div>
 where `G` is number of GPU per machine, `N` is the number of machines, and `R` is the machine number from `0...(N-1)`. 
 Let's say I have two machines with two GPUs each, it would be `G = 2` , `N = 2`, and `R = 1` for the above.
 
@@ -848,21 +840,19 @@ Training will not start until <b>all </b> `N` machines are connected. Output wil
 <li>GPU 0 will take more memory than the other GPUs. (Edit: After 1.6 pytorch update, it may take even more memory.)</li>
 <li>If you get <code>RuntimeError: Address already in use</code>, it could be because you are running multiple trainings at a time. To fix this, simply use a different port number by adding <code>--master_port</code> like below,</li>
 </ul>
-<pre><code class="language-bash">$ python -m torch.distributed.launch --master_port 1234 --nproc_per_node 2 ...
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ python -m torch.distributed.launch --master_port <span class="m">1234</span> --nproc_per_node <span class="m">2</span> ...
+</code></pre></div>
 <h2 id="results">Results</h2>
 <p>Tested on COCO2017 dataset using V100s for 3 epochs with <code>yolov5l</code> and averaged.
 DistributedDataParallel mode.</p>
 <details>
     <summary>Command</summary>
 
-
-<pre><code class="language-bash">$ python train.py --batch-size 64 --data coco.yaml --cfg yolov5s.yaml --weights '' --device 0
-$ python -m torch.distributed.launch --nproc_per_node 2 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
-$ python -m torch.distributed.launch --nproc_per_node 4 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
-$ python -m torch.distributed.launch --nproc_per_node 8 train.py --batch-size 64 --data coco.yaml --weights yolov5s.pt
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$ python train.py --batch-size <span class="m">64</span> --data coco.yaml --cfg yolov5s.yaml --weights <span class="s1">&#39;&#39;</span> --device <span class="m">0</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$ python -m torch.distributed.launch --nproc_per_node <span class="m">2</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --weights yolov5s.pt
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>$ python -m torch.distributed.launch --nproc_per_node <span class="m">4</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --weights yolov5s.pt
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>$ python -m torch.distributed.launch --nproc_per_node <span class="m">8</span> train.py --batch-size <span class="m">64</span> --data coco.yaml --weights yolov5s.pt
+</code></pre></div>
 </details>
 
 <p><img alt="image" src="https://user-images.githubusercontent.com/9899957/88168921-57702b00-cc45-11ea-8aab-2d020e1e45b9.png" />

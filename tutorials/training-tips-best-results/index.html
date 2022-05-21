@@ -668,22 +668,20 @@
 <p align="center"><img width="700" alt="YOLOv5 Models" src="https://user-images.githubusercontent.com/26833433/103595982-ab986000-4eb1-11eb-8c57-4726261b0a88.png"></p>
 
 <ul>
-<li><strong>Start from Pretrained weights.</strong> Recommended for small to medium sized datasets (i.e. VOC, VisDrone, GlobalWheat). Pass the name of the model to the <code>--weights</code> argument. Models download automatically from the <a href="https://github.com/ultralytics/yolov5/releases">latest YOLOv5 release</a>.</li>
+<li><strong>Start from Pretrained weights.</strong> Recommended for small to medium sized datasets (i.e. VOC, VisDrone, GlobalWheat). Pass the name of the model to the <code>--weights</code> argument. Models download automatically from the <a href="https://github.com/ultralytics/yolov5/releases">latest YOLOv5 release</a>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python train.py --data custom.yaml --weights yolov5s.pt
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                             yolov5m.pt
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                             yolov5l.pt
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                             yolov5x.pt
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                             custom_pretrained.pt
+</code></pre></div></li>
+<li><strong>Start from Scratch.</strong> Recommended for large datasets (i.e. COCO, Objects365, OIv6). Pass the model architecture yaml you are interested in, along with an empty <code>--weights ''</code> argument:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python train.py --data custom.yaml --weights <span class="s1">&#39;&#39;</span> --cfg yolov5s.yaml
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                                                      yolov5m.yaml
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                                                      yolov5l.yaml
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                                                      yolov5x.yaml
+</code></pre></div></li>
 </ul>
-<pre><code class="language-bash">python train.py --data custom.yaml --weights yolov5s.pt
-                                             yolov5m.pt
-                                             yolov5l.pt
-                                             yolov5x.pt
-                                             custom_pretrained.pt
-</code></pre>
-<ul>
-<li><strong>Start from Scratch.</strong> Recommended for large datasets (i.e. COCO, Objects365, OIv6). Pass the model architecture yaml you are interested in, along with an empty <code>--weights ''</code> argument:</li>
-</ul>
-<pre><code class="language-bash">python train.py --data custom.yaml --weights '' --cfg yolov5s.yaml
-                                                      yolov5m.yaml
-                                                      yolov5l.yaml
-                                                      yolov5x.yaml
-</code></pre>
 <h2 id="training-settings">Training Settings</h2>
 <p>Before modifying anything, <strong>first train with default settings to establish a performance baseline</strong>. A full list of train.py settings can be found in the <a href="https://github.com/ultralytics/yolov5/blob/master/train.py">train.py</a> argparser.</p>
 <ul>

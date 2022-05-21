@@ -666,70 +666,70 @@
 <p>📚 This guide explains how to apply <strong>pruning</strong> to YOLOv5 🚀 models.</p>
 <h2 id="before-you-start">Before You Start</h2>
 <p>Clone YOLOv5 repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch&gt;=1.7</strong>.</p>
-<pre><code class="language-bash">$ git clone https://github.com/ultralytics/yolov5  # clone repo
-$ cd yolov5
-$ pip install -r requirements.txt  # install
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ git clone https://github.com/ultralytics/yolov5  <span class="c1"># clone repo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$ <span class="nb">cd</span> yolov5
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$ pip install -r requirements.txt  <span class="c1"># install</span>
+</code></pre></div>
 <h2 id="test-yolov5x-on-coco-default">Test YOLOv5x on COCO (default)</h2>
-<p>This command tests YOLOv5x on COCO val2017 at image size 640 pixels to establish a nominal baseline. <code>yolov5x.pt</code> is the largest and most accurate model available. Other options are <code>yolov5s.pt</code>, <code>yolov5m.pt</code> and <code>yolov5l.pt</code>, or you own checkpoint from training a custom dataset <code>./weights/best.pt</code>. For details on all available models please see our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a>.</p>
-<pre><code class="language-bash">$ python test.py --weights yolov5x.pt --data coco.yaml --img 640 --iou 0.65
-</code></pre>
-<p>Default output:</p>
-<pre><code class="language-bash">YOLOv5 🚀 v4.0-174-g9c803f2 torch 1.8.0+cu101 CUDA:0 (Tesla V100-SXM2-16GB, 16160.5MB)
-
-Fusing layers... 
-Model Summary: 476 layers, 87730285 parameters, 0 gradients, 218.8 GFLOPS
-val: Scanning '../coco/val2017.cache' images and labels... 4952 found, 48 missing, 0 empty, 0 corrupted: 100% 5000/5000 [00:00&lt;00:00, 50901747.57it/s]
-
-               Class      Images      Labels           P           R      mAP@.5  mAP@.5:.95: 100% 157/157 [01:20&lt;00:00,  1.95it/s]
-                 all        5000       36335       0.749       0.619        0.68       0.486
-Speed: 5.2/1.6/6.8 ms inference/NMS/total per 640x640 image at batch-size 32  &lt; -------- speed
-
-Evaluating pycocotools mAP... saving runs/test/exp/yolov5x_predictions.json...
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.501  &lt; -------- mAP
- Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.687
- Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.544
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.338
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.548
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.637
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.378   &lt; -------- mAR
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.628
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.680
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.520
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.729
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.826
-Results saved to runs/test/exp
-</code></pre>
+<p>This command tests YOLOv5x on COCO val2017 at image size 640 pixels to establish a nominal baseline. <code>yolov5x.pt</code> is the largest and most accurate model available. Other options are <code>yolov5s.pt</code>, <code>yolov5m.pt</code> and <code>yolov5l.pt</code>, or you own checkpoint from training a custom dataset <code>./weights/best.pt</code>. For details on all available models please see our README <a href="https://github.com/ultralytics/yolov5#pretrained-checkpoints">table</a>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ python test.py --weights yolov5x.pt --data coco.yaml --img <span class="m">640</span> --iou <span class="m">0</span>.65
+</code></pre></div></p>
+<p>Default output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>YOLOv5 🚀 v4.0-174-g9c803f2 torch <span class="m">1</span>.8.0+cu101 CUDA:0 <span class="o">(</span>Tesla V100-SXM2-16GB, <span class="m">16160</span>.5MB<span class="o">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Fusing layers... 
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Model Summary: <span class="m">476</span> layers, <span class="m">87730285</span> parameters, <span class="m">0</span> gradients, <span class="m">218</span>.8 GFLOPS
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>val: Scanning <span class="s1">&#39;../coco/val2017.cache&#39;</span> images and labels... <span class="m">4952</span> found, <span class="m">48</span> missing, <span class="m">0</span> empty, <span class="m">0</span> corrupted: <span class="m">100</span>% <span class="m">5000</span>/5000 <span class="o">[</span><span class="m">00</span>:00&lt;<span class="m">00</span>:00, <span class="m">50901747</span>.57it/s<span class="o">]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>               Class      Images      Labels           P           R      mAP@.5  mAP@.5:.95: <span class="m">100</span>% <span class="m">157</span>/157 <span class="o">[</span><span class="m">01</span>:20&lt;<span class="m">00</span>:00,  <span class="m">1</span>.95it/s<span class="o">]</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>                 all        <span class="m">5000</span>       <span class="m">36335</span>       <span class="m">0</span>.749       <span class="m">0</span>.619        <span class="m">0</span>.68       <span class="m">0</span>.486
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Speed: <span class="m">5</span>.2/1.6/6.8 ms inference/NMS/total per 640x640 image at batch-size <span class="m">32</span>  &lt; -------- speed
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Evaluating pycocotools mAP... saving runs/test/exp/yolov5x_predictions.json...
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.501  &lt; -------- mAP
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.687
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.75      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.544
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.338
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.548
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.637
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span>  <span class="m">1</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.378   &lt; -------- mAR
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span> <span class="m">10</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.628
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.680
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.520
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.729
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.826
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>Results saved to runs/test/exp
+</code></pre></div></p>
 <h2 id="test-yolov5x-on-coco-030-sparsity">Test YOLOv5x on COCO (0.30 sparsity)</h2>
 <p>We repeat the above test with a pruned model by using the <code>torch_utils.prune()</code> command. We update <code>test.py</code> to prune YOLOv5x to 0.3 sparsity:</p>
 <p><img width="780" alt="Screenshot 2021-05-16 at 15 43 09" src="https://user-images.githubusercontent.com/26833433/118399455-7967ed80-b65d-11eb-80f2-41a9d0fe06ef.png"></p>
-<p>30% pruned output:</p>
-<pre><code class="language-bash">YOLOv5 🚀 v4.0-174-g9c803f2 torch 1.8.0+cu101 CUDA:0 (Tesla V100-SXM2-16GB, 16160.5MB)
-
-Fusing layers... 
-Model Summary: 476 layers, 87730285 parameters, 0 gradients, 218.8 GFLOPS
-Pruning model...  0.3 global sparsity
-val: Scanning '../coco/val2017.cache' images and labels... 4952 found, 48 missing, 0 empty, 0 corrupted: 100% 5000/5000 [00:00&lt;00:00, 50901747.57it/s]
-
-               Class      Images      Labels           P           R      mAP@.5  mAP@.5:.95: 100% 157/157 [01:17&lt;00:00,  2.01it/s]
-                 all        5000       36335       0.742       0.595        0.66        0.46
-Speed: 5.2/1.5/6.7 ms inference/NMS/total per 640x640 image at batch-size 32  &lt; -------- speed
-
-Evaluating pycocotools mAP... saving runs/test/exp/yolov5x_predictions.json...
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.477  &lt; -------- mAP
- Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.667
- Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.525
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.313
- Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.530
- Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.619
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.366   &lt; -------- mAR
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.603
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.654
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.475
- Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.709
- Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.794
-Results saved to runs/test/exp
-</code></pre>
+<p>30% pruned output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>YOLOv5 🚀 v4.0-174-g9c803f2 torch <span class="m">1</span>.8.0+cu101 CUDA:0 <span class="o">(</span>Tesla V100-SXM2-16GB, <span class="m">16160</span>.5MB<span class="o">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Fusing layers... 
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Model Summary: <span class="m">476</span> layers, <span class="m">87730285</span> parameters, <span class="m">0</span> gradients, <span class="m">218</span>.8 GFLOPS
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Pruning model...  <span class="m">0</span>.3 global sparsity
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>val: Scanning <span class="s1">&#39;../coco/val2017.cache&#39;</span> images and labels... <span class="m">4952</span> found, <span class="m">48</span> missing, <span class="m">0</span> empty, <span class="m">0</span> corrupted: <span class="m">100</span>% <span class="m">5000</span>/5000 <span class="o">[</span><span class="m">00</span>:00&lt;<span class="m">00</span>:00, <span class="m">50901747</span>.57it/s<span class="o">]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>               Class      Images      Labels           P           R      mAP@.5  mAP@.5:.95: <span class="m">100</span>% <span class="m">157</span>/157 <span class="o">[</span><span class="m">01</span>:17&lt;<span class="m">00</span>:00,  <span class="m">2</span>.01it/s<span class="o">]</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                 all        <span class="m">5000</span>       <span class="m">36335</span>       <span class="m">0</span>.742       <span class="m">0</span>.595        <span class="m">0</span>.66        <span class="m">0</span>.46
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>Speed: <span class="m">5</span>.2/1.5/6.7 ms inference/NMS/total per 640x640 image at batch-size <span class="m">32</span>  &lt; -------- speed
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>Evaluating pycocotools mAP... saving runs/test/exp/yolov5x_predictions.json...
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.477  &lt; -------- mAP
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.667
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.75      <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.525
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.313
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.530
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a> Average Precision  <span class="o">(</span>AP<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.619
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span>  <span class="m">1</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.366   &lt; -------- mAR
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span> <span class="m">10</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.603
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>   all <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.654
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> small <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.475
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span>medium <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.709
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a> Average Recall     <span class="o">(</span>AR<span class="o">)</span> @<span class="o">[</span> <span class="nv">IoU</span><span class="o">=</span><span class="m">0</span>.50:0.95 <span class="p">|</span> <span class="nv">area</span><span class="o">=</span> large <span class="p">|</span> <span class="nv">maxDets</span><span class="o">=</span><span class="m">100</span> <span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.794
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>Results saved to runs/test/exp
+</code></pre></div></p>
 <p>In the results we can observe that we have achieved a <strong>sparsity of 30%</strong> in our model after pruning, which means that 30% of the model's weight parameters in <code>nn.Conv2d</code> layers are equal to 0. <strong>Inference time is essentially unchanged</strong>, while the model's <strong>AP and AR scores a slightly reduced</strong>.</p>
 <h2 id="environments">Environments</h2>
 <p>YOLOv5 may be run in any of the following up-to-date verified environments (with all dependencies including <a href="https://developer.nvidia.com/cuda">CUDA</a>/<a href="https://developer.nvidia.com/cudnn">CUDNN</a>, <a href="https://www.python.org/">Python</a> and <a href="https://pytorch.org/">PyTorch</a> preinstalled):</p>

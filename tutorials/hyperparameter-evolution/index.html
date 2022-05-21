@@ -695,10 +695,10 @@
 <p>Hyperparameters in ML control various aspects of training, and finding optimal values for them can be a challenge. Traditional methods like grid searches can quickly become intractable due to 1) the high dimensional search space 2) unknown correlations among the dimensions, and 3) expensive nature of evaluating the fitness at each point, making GA a suitable candidate for hyperparameter searches.</p>
 <h2 id="before-you-start">Before You Start</h2>
 <p>Clone this repo and install <a href="https://github.com/ultralytics/yolov5/blob/master/requirements.txt">requirements.txt</a> dependencies, including <strong>Python&gt;=3.8</strong> and <strong>PyTorch&gt;=1.7</strong>.</p>
-<pre><code class="language-bash">$ git clone https://github.com/ultralytics/yolov5  # clone repo
-$ cd yolov5
-$ pip install -r requirements.txt  # install dependencies
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ git clone https://github.com/ultralytics/yolov5  <span class="c1"># clone repo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$ <span class="nb">cd</span> yolov5
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$ pip install -r requirements.txt  <span class="c1"># install dependencies</span>
+</code></pre></div>
 <h2 id="1-initialize-hyperparameters">1. Initialize Hyperparameters</h2>
 <p>YOLOv5 has about 25 hyperparameters used for various training settings. These are defined in yaml files in the /data directory. Better initial guesses will produce better final results, so it is important to initialize these values properly before evolving. If in doubt, simply use the default values, which are optimized for YOLOv5 COCO training from scratch.
 https://github.com/ultralytics/yolov5/blob/3bb414890a253bb1a269fb81cc275d11c8fffa72/data/hyp.scratch.yaml#L1-L33</p>
@@ -706,60 +706,60 @@ https://github.com/ultralytics/yolov5/blob/3bb414890a253bb1a269fb81cc275d11c8fff
 <p>Fitness is the value we seek to maximize. In YOLOv5 we have defined a default fitness function as a weighted combination of metrics: mAP@0.5 contributes 10% of the weight and mAP@0.5:0.95 contributes the remaining 90%. You may adjust these as you see fit or use the default fitness definition.
 https://github.com/ultralytics/yolov5/blob/c5d233189729a9e7e25d3aa2d347aed02b545d30/utils/general.py#L917-L921</p>
 <h2 id="3-evolve">3. Evolve</h2>
-<p>Evolution is performed about a base scenario which we seek to improve upon. The base scenario in this example is finetuning COCO128 for 10 epochs using pretrained YOLOv5s. The base scenario training command is:</p>
-<pre><code class="language-bash">python train.py --epochs 10 --data coco128.yaml --weights yolov5s.pt --cache
-</code></pre>
-<p>To evolve hyperparameters <strong>specific to this scenario</strong>, starting from our initial values defined in <strong>Section 1.</strong>, and maximizing the fitness defined in <strong>Section 2.</strong>, append <code>--evolve</code>:</p>
-<pre><code class="language-bash"># Single-GPU
-python train.py --epochs 10 --data coco128.yaml --weights yolov5s.pt --cache --evolve
-
-# Multi-GPU
-for i in 0 1 2 3; do
-  nohup python train.py --epochs 10 --data coco128.yaml --weights yolov5s.pt --cache --evolve --device $i &gt; evolve_gpu_$i.log &amp;
-done
-
-# Multi-GPU bash while (not recommended)
-for i in 0 1 2 3; do
-  nohup &quot;$(while true; do python train.py ... --evolve --device $i; done)&quot; &gt; evolve_gpu_$i.log &amp;
-done
-</code></pre>
+<p>Evolution is performed about a base scenario which we seek to improve upon. The base scenario in this example is finetuning COCO128 for 10 epochs using pretrained YOLOv5s. The base scenario training command is:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python train.py --epochs <span class="m">10</span> --data coco128.yaml --weights yolov5s.pt --cache
+</code></pre></div>
+To evolve hyperparameters <strong>specific to this scenario</strong>, starting from our initial values defined in <strong>Section 1.</strong>, and maximizing the fitness defined in <strong>Section 2.</strong>, append <code>--evolve</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Single-GPU</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python train.py --epochs <span class="m">10</span> --data coco128.yaml --weights yolov5s.pt --cache --evolve
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Multi-GPU</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">for</span> i <span class="k">in</span> <span class="m">0</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span><span class="p">;</span> <span class="k">do</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  nohup python train.py --epochs <span class="m">10</span> --data coco128.yaml --weights yolov5s.pt --cache --evolve --device <span class="nv">$i</span> &gt; evolve_gpu_<span class="nv">$i</span>.log <span class="p">&amp;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">done</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># Multi-GPU bash while (not recommended)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">for</span> i <span class="k">in</span> <span class="m">0</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span><span class="p">;</span> <span class="k">do</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>  nohup <span class="s2">&quot;</span><span class="k">$(while</span> true<span class="p">;</span> <span class="k">do</span> python train.py ... --evolve --device <span class="nv">$i</span><span class="p">;</span> <span class="k">done)</span><span class="s2">&quot;</span> &gt; evolve_gpu_<span class="nv">$i</span>.log <span class="p">&amp;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">done</span>
+</code></pre></div></p>
 <p>The default evolution settings will run the base scenario 300 times, i.e. for 300 generations:
 https://github.com/ultralytics/yolov5/blob/c5d233189729a9e7e25d3aa2d347aed02b545d30/train.py#L497</p>
-<p>The main genetic operators are <strong>crossover</strong> and <strong>mutation</strong>. In this work mutation is used, with a 90% probability and a 0.04 variance to create new offspring based on a combination of the best parents from all previous generations. Results are tracked in <code>yolov5/evolve.txt</code>, and the highest fitness offspring is saved every generation as <code>yolov5/runs/evolve/hyp_evolved.yaml</code>:</p>
-<pre><code class="language-yaml"># Hyperparameter Evolution Results
-# Generations: 1000
-#                   P         R     mAP.5 mAP.5:.95       box       obj       cls
-# Metrics:     0.4761      0.79     0.763    0.4951   0.01926   0.03286  0.003559
-
-lr0: 0.01  # initial learning rate (SGD=1E-2, Adam=1E-3)
-lrf: 0.2  # final OneCycleLR learning rate (lr0 * lrf)
-momentum: 0.937  # SGD momentum/Adam beta1
-weight_decay: 0.0005  # optimizer weight decay 5e-4
-warmup_epochs: 3.0  # warmup epochs (fractions ok)
-warmup_momentum: 0.8  # warmup initial momentum
-warmup_bias_lr: 0.1  # warmup initial bias lr
-box: 0.05  # box loss gain
-cls: 0.5  # cls loss gain
-cls_pw: 1.0  # cls BCELoss positive_weight
-obj: 1.0  # obj loss gain (scale with pixels)
-obj_pw: 1.0  # obj BCELoss positive_weight
-iou_t: 0.20  # IoU training threshold
-anchor_t: 4.0  # anchor-multiple threshold
-anchors: 0  # anchors per output grid (0 to ignore)
-fl_gamma: 0.0  # focal loss gamma (efficientDet default gamma=1.5)
-hsv_h: 0.015  # image HSV-Hue augmentation (fraction)
-hsv_s: 0.7  # image HSV-Saturation augmentation (fraction)
-hsv_v: 0.4  # image HSV-Value augmentation (fraction)
-degrees: 0.0  # image rotation (+/- deg)
-translate: 0.1  # image translation (+/- fraction)
-scale: 0.5  # image scale (+/- gain)
-shear: 0.0  # image shear (+/- deg)
-perspective: 0.0  # image perspective (+/- fraction), range 0-0.001
-flipud: 0.0  # image flip up-down (probability)
-fliplr: 0.5  # image flip left-right (probability)
-mosaic: 1.0  # image mosaic (probability)
-mixup: 0.0  # image mixup (probability)
-</code></pre>
+<p>The main genetic operators are <strong>crossover</strong> and <strong>mutation</strong>. In this work mutation is used, with a 90% probability and a 0.04 variance to create new offspring based on a combination of the best parents from all previous generations. Results are tracked in <code>yolov5/evolve.txt</code>, and the highest fitness offspring is saved every generation as <code>yolov5/runs/evolve/hyp_evolved.yaml</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Hyperparameter Evolution Results</span><span class="w"></span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Generations: 1000</span><span class="w"></span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">#                   P         R     mAP.5 mAP.5:.95       box       obj       cls</span><span class="w"></span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Metrics:     0.4761      0.79     0.763    0.4951   0.01926   0.03286  0.003559</span><span class="w"></span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nt">lr0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">  </span><span class="c1"># initial learning rate (SGD=1E-2, Adam=1E-3)</span><span class="w"></span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nt">lrf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># final OneCycleLR learning rate (lr0 * lrf)</span><span class="w"></span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nt">momentum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.937</span><span class="w">  </span><span class="c1"># SGD momentum/Adam beta1</span><span class="w"></span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nt">weight_decay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0005</span><span class="w">  </span><span class="c1"># optimizer weight decay 5e-4</span><span class="w"></span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nt">warmup_epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">  </span><span class="c1"># warmup epochs (fractions ok)</span><span class="w"></span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nt">warmup_momentum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w">  </span><span class="c1"># warmup initial momentum</span><span class="w"></span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="nt">warmup_bias_lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># warmup initial bias lr</span><span class="w"></span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nt">box</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">  </span><span class="c1"># box loss gain</span><span class="w"></span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="nt">cls</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># cls loss gain</span><span class="w"></span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="nt">cls_pw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># cls BCELoss positive_weight</span><span class="w"></span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="nt">obj</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># obj loss gain (scale with pixels)</span><span class="w"></span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="nt">obj_pw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># obj BCELoss positive_weight</span><span class="w"></span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="nt">iou_t</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.20</span><span class="w">  </span><span class="c1"># IoU training threshold</span><span class="w"></span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="nt">anchor_t</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.0</span><span class="w">  </span><span class="c1"># anchor-multiple threshold</span><span class="w"></span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="nt">anchors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">  </span><span class="c1"># anchors per output grid (0 to ignore)</span><span class="w"></span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="nt">fl_gamma</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># focal loss gamma (efficientDet default gamma=1.5)</span><span class="w"></span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="nt">hsv_h</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span><span class="w">  </span><span class="c1"># image HSV-Hue augmentation (fraction)</span><span class="w"></span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="nt">hsv_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span><span class="w">  </span><span class="c1"># image HSV-Saturation augmentation (fraction)</span><span class="w"></span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="nt">hsv_v</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.4</span><span class="w">  </span><span class="c1"># image HSV-Value augmentation (fraction)</span><span class="w"></span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="nt">degrees</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># image rotation (+/- deg)</span><span class="w"></span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="nt">translate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># image translation (+/- fraction)</span><span class="w"></span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># image scale (+/- gain)</span><span class="w"></span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="nt">shear</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># image shear (+/- deg)</span><span class="w"></span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="nt">perspective</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># image perspective (+/- fraction), range 0-0.001</span><span class="w"></span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="nt">flipud</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># image flip up-down (probability)</span><span class="w"></span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="nt">fliplr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># image flip left-right (probability)</span><span class="w"></span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="nt">mosaic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># image mosaic (probability)</span><span class="w"></span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="nt">mixup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># image mixup (probability)</span><span class="w"></span>
+</code></pre></div></p>
 <p>We recommend a <strong>minimum</strong> of 300 generations of evolution for best results. Note that <strong>evolution is generally expensive and time consuming</strong>, as the base scenario is trained hundreds of times, possibly requiring hundreds or thousands of GPU hours.</p>
 <h2 id="4-visualize">4. Visualize</h2>
 <p>Results are saved as <code>yolov5/evolve.png</code>, with one plot per hyperparameter. Values are on the x axis and fitness on the y axis. Yellow indicates higher concentrations. Vertical lines indicate that a parameter has been disabled and does not mutate. This is user selectable in the <code>meta</code> dictionary in train.py, and is useful for fixing parameters and preventing them from evolving.</p>
