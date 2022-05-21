@@ -20,6 +20,7 @@ nav:
       Hyperparameter Evolution: tutorials/hyperparameter-evolution.md
       Transfer Learning with Frozen Layers: tutorials/transfer-learning-froze-layers.md
       TensorRT Deployment: https://github.com/wang-xinyu/tensorrtx/tree/master/yolov5
+  - FAQ:
 
 docs_dir: src
 site_dir: docs
